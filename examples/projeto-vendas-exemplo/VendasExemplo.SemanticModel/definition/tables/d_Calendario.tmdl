@@ -1,0 +1,24 @@
+table d_Calendario
+	lineageTag: a0000000-0000-4000-8000-000000000004
+	dataCategory: Time
+
+	column Data
+		dataType: dateTime
+		isKey
+		formatString: dd/mm/yyyy
+		summarizeBy: none
+		sourceColumn: Data
+
+	column Ano
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Ano
+
+	column 'Ano Mes'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Ano Mes
+
+	partition d_Calendario = calculated
+		mode: import
+		source = ADDCOLUMNS(CALENDAR(DATE(2024,1,1), DATE(2026,12,31)), "Ano", YEAR([Date]), "Ano Mes", FORMAT([Date], "yyyy-mm"))

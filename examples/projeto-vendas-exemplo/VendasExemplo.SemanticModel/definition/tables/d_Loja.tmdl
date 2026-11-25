@@ -1,0 +1,22 @@
+table d_Loja
+	lineageTag: a0000000-0000-4000-8000-000000000003
+
+	column LojaKey
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: LojaKey
+
+	column Loja
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Loja
+
+	column Regiao
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Regiao
+
+	partition d_Loja = m
+		mode: import
+		source = Sql.Database("servidor-exemplo", "LojaExemplo", [Query="SELECT LojaKey, Loja, Regiao FROM dbo.Loja"])

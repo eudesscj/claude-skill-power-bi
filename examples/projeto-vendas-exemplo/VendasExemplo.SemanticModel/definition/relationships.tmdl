@@ -1,0 +1,12 @@
+relationship 6f1d2a10-0001-4000-8000-000000000001
+	fromColumn: f_Vendas.ProdutoKey
+	toColumn: d_Produto.ProdutoKey
+
+relationship 6f1d2a10-0001-4000-8000-000000000002
+	crossFilteringBehavior: bothDirections
+	fromColumn: f_Vendas.LojaKey
+	toColumn: d_Loja.LojaKey
+
+relationship 6f1d2a10-0001-4000-8000-000000000003
+	fromColumn: f_Vendas.Data
+	toColumn: d_Calendario.Data

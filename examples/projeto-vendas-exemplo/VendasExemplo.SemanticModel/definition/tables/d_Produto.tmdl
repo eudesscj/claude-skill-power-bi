@@ -1,0 +1,22 @@
+table d_Produto
+	lineageTag: a0000000-0000-4000-8000-000000000002
+
+	column ProdutoKey
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: ProdutoKey
+
+	column Produto
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Produto
+
+	column Categoria
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Categoria
+
+	partition d_Produto = m
+		mode: import
+		source = Sql.Database("servidor-exemplo", "LojaExemplo", [Query="SELECT ProdutoKey, Produto, Categoria FROM dbo.Produto"])

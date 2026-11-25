@@ -1,0 +1,29 @@
+table _Medidas
+	lineageTag: a0000000-0000-4000-8000-000000000005
+
+	/// Soma do valor de venda.
+	measure 'Receita Total' =
+			SUM(f_Vendas[ValorVenda])
+		formatString: "R$ "#,0.00
+		displayFolder: Vendas
+
+	measure 'Custo Total' =
+			SUM(f_Vendas[Custo])
+		formatString: "R$ "#,0.00
+		displayFolder: Vendas
+
+	measure 'Margem %' =
+			([Receita Total] - [Custo Total]) / [Receita Total]
+		displayFolder: Rentabilidade
+
+	measure TKM =
+			IFERROR([Receita Total] / SUM(f_Vendas[Quantidade]), 0)
+
+	measure 'Receita Ano Anterior' =
+			CALCULATE([Receita Total], SAMEPERIODLASTYEAR(d_Calendario[Data]))
+		formatString: "R$ "#,0.00
+		displayFolder: Vendas
+
+	partition _Medidas = calculated
+		mode: import
+		source = ROW("Coluna", BLANK())

@@ -1,0 +1,44 @@
+table f_Vendas
+	lineageTag: a0000000-0000-4000-8000-000000000001
+
+	column ProdutoKey
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: ProdutoKey
+
+	column LojaKey
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: LojaKey
+
+	column Data
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		summarizeBy: none
+		sourceColumn: Data
+
+	column Quantidade
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: Quantidade
+
+	column ValorVenda
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: ValorVenda
+
+	column Custo
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: Custo
+
+	partition f_Vendas = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\analista\Downloads\vendas.csv"), [Delimiter=";"]),
+				    Cabecalho = Table.PromoteHeaders(Fonte)
+				in
+				    Cabecalho
